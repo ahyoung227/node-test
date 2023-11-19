@@ -31,8 +31,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Get latest commit
+        run: echo "LATEST_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
       - name: Code Deploy
         run: >
           aws deploy create-deployment --application-name msb-deploy-test
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name msb-deploy-test-group
+          --github-location repository=$GITHUB_REPOSITORY,commitId=$LATEST_COMMIT
