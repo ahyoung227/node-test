@@ -13,3 +13,7 @@ hooks:
   ApplicationStart:
     - location: /start.sh
       runas: root
+
+  AfterInstall:
+    - location: /deploy.sh
+      runas: root
